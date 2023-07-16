@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <div className='font-sora p-0 m-0 container lg:container-lg'>
+        <div className='font-sora p-0 m-auto container lg:container-lg'>
           <Navbar />
           {children}
         </div>
