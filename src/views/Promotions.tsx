@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 
 function Promotions() {
   return (
-    <div className='container text-center py-16'>
+    <div className=' text-center py-16'>
       <h3 className='mb-4 text-md text-blue-700 font-bold'>PROMOTIONS</h3>
       <h2 className='text-3xl font-bold mb-10'>Our Promotions Events</h2>
       <div className='grid grid-cols-1  lg:grid-cols-2 gap-3 '>

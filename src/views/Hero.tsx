@@ -5,7 +5,7 @@ import FeaturedListImg from '../../public/static/images/feautured-list.png';
 import Image from 'next/image';
 const Hero = () => {
   return (
-    <div className='container lg:container-lg h-[90vh] p-0 pt-10 flex   w-full items-center lg:items-end gap-10'>
+    <div className=' h-[90vh] p-0 pt-10 flex   w-full items-center lg:items-end gap-10'>
       <div className=' text-left  flex-1  h-[80%]  flex flex-col justify-between'>
         <div>
           <div className='bg-blue-50 w-auto py-2 px-4 inline-block mb-8 rounded-md text-blue-500 font-bold'>
