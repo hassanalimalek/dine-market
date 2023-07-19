@@ -2,6 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '~react-image-gallery/styles/css/image-gallery.css';
 
 @layer base {
   :root {
@@ -85,6 +86,26 @@
 .container {
   width: 90%;
 }
-.container-lg {
-  width: 1210px;
+@media screen and (min-width: 1024px) {
+  .container {
+    width: 1300px !important;
+    max-width: 90%;
+  }
+}
+.no-default-container {
+  width: 100vw !important;
+  margin: auto;
+  position: absolute;
+  left: 0;
+}
+
+.image-gallery-slide img {
+  height: 80vh !important;
+  width: 100% !important;
+  object-fit: cover !important;
+}
+@media screen and (max-width: 724px) {
+  .image-gallery-slide img {
+    height: 50vh !important;
+  }
 }

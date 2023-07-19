@@ -1,3 +1,4 @@
+import Footer from '../views/Footer';
 import Navbar from '../views/Navbar';
 import './globals.css';
 import { Inter } from 'next/font/google';
@@ -17,10 +18,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <div className='font-sora p-0 m-auto container lg:container-lg'>
+        <div className='font-sora p-0 m-auto container '>
           <Navbar />
           {children}
         </div>
+        <Footer />
       </body>
     </html>
   );

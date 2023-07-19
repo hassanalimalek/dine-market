@@ -1,15 +1,19 @@
+import { getProducts } from '@/lib/products';
 import BrandDescription from '@/views/BrandDescription';
 import Hero from '@/views/Hero';
 import HomeProducts from '@/views/HomeProducts';
+import NewsLetter from '@/views/NewsLetter';
 import Promotions from '@/views/Promotions';
 
-export default function Home() {
+export default async function Home() {
+  let data = await getProducts();
   return (
     <>
       <Hero />
       <Promotions />
       <HomeProducts />
       <BrandDescription />
+      <NewsLetter />
     </>
   );
 }
