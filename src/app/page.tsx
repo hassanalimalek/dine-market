@@ -1,4 +1,4 @@
-import { getProducts } from '@/lib/products';
+import { getProducts } from '@/lib/sanityQueries';
 import BrandDescription from '@/views/BrandDescription';
 import Hero from '@/views/Hero';
 import HomeProducts from '@/views/HomeProducts';

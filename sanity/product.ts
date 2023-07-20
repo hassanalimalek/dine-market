@@ -35,7 +35,7 @@ export const product = defineType({
       type: 'number',
     }),
     defineField({
-      name: 'desciption',
+      name: 'description',
       title: 'Description',
       type: 'text',
     }),

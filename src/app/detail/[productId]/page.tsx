@@ -5,44 +5,38 @@ import { Toggle } from '@/components/ui/toggle';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import useSWR from 'swr';
+import { getProductDetail } from '@/lib/sanityQueries';
+import { urlForImage } from '@/lib/image';
+import useWindowSize from '@/lib/hooks/useWindowSize';
+function ProductDetail({ params }) {
+  const size = useWindowSize();
+  console.log('size --->', size);
 
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-function ProductDetail() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
+  const {
+    data: productData,
+    error,
+    isLoading,
+  } = useSWR(params.productId, getProductDetail);
+  console.log('error --->', error);
+  console.log(' productData --->', productData);
+  console.log(' params ===>', params.productId);
+
+  const [images, setImages] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
-  const images = [
-    {
-      original: 'https://picsum.photos/id/1018/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1018/250/150/',
-      thumbnailClass: 'thumbnailImage',
-    },
-    {
-      original: 'https://picsum.photos/id/1015/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1015/250/150/',
-      thumbnailClass: 'thumbnailImage',
-    },
-    {
-      original: 'https://picsum.photos/id/1019/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1019/250/150/',
-      thumbnailClass: 'thumbnailImage',
-    },
-  ];
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  useEffect(() => {
+    if (productData?.images) {
+      let images = productData.images.map((image: any) => {
+        return {
+          original: urlForImage(image?.asset)?.url(),
+          thumbnail: urlForImage(image?.asset)?.url(),
+        };
+      });
+      console.log('images --->', images);
+      setImages(images);
+    }
+  }, [productData]);
   return (
     <div className='bg-[#FCFCFC] no-default-container bg-none'>
       <div className='container px-0 '>
@@ -52,7 +46,7 @@ function ProductDetail() {
             <ImageGallery
               items={images}
               thumbnailPosition={
-                windowDimensions.width > 1024 ? 'left' : 'bottom'
+                size?.width && size?.width > 1024 ? 'left' : 'bottom'
               }
               showFullscreenButton={false}
               showBullets={false}
@@ -63,10 +57,10 @@ function ProductDetail() {
           {/* Buy Section  */}
           <div className=' flex-1 flex-grow-1 p-0 lg:p-6  py-6 lg:py-8'>
             <h2 className=' font-semibold text-xl lg:text-3xl'>
-              Cameryn Sash Tie Dress
+              {productData?.title}
             </h2>
             <p className=' font-bold text-xl lg:text-2xl text-[#AFAFAF] mb-8'>
-              Dress
+              {productData?.category?.productCategory}
             </p>
             <div className=''>
               <h4 className='uppercase text-black font-extrabold text-md lg:text-lg'>
@@ -106,11 +100,11 @@ function ProductDetail() {
             <div className=' flex items-center gap-8 py-4  lg:py-6'>
               <h2 className='text-md lg:text-lg font-bold'>Quantity</h2>
               <div className='flex items-center gap-3'>
-                <Button className='rounded-full text-2xl lg:text-3xl p-0 px-3 bg-white text-black className hover:text-white'>
+                <Button className='rounded-full text-2xl lg:text-3xl p-0 px-3 bg-white text-black className hover:text-white border border-black'>
                   -
                 </Button>
                 <p>1</p>
-                <Button className='rounded-full  text-2xl lg:text-3xl  p-0 px-3 bg-white text-black className hover:bg-black hover:text-white'>
+                <Button className='rounded-full  text-2xl lg:text-3xl  p-0 px-[0.6rem] bg-white text-black className hover:bg-black hover:text-white border border-black'>
                   +
                 </Button>
               </div>
@@ -120,7 +114,7 @@ function ProductDetail() {
                 <ShoppingCart className='mr-2' /> Add to Cart
               </Button>
               <p className=' text-xl lg:text-2xl   font-bold space-x-2'>
-                $545.00
+                ${productData?.price}
               </p>
             </div>
           </div>
@@ -140,15 +134,7 @@ function ProductDetail() {
             <h4 className='uppercase text-xl font-semibold text-[#666666] mb-1'>
               Product Detail
             </h4>
-            <p className='text-lg'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+            <p className='text-lg'>{productData?.description}</p>
           </div>
         </div>
       </div>
