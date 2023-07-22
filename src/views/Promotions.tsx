@@ -4,8 +4,15 @@ import Promo2 from '../../public/static/images/promo2.png';
 import Promo3 from '../../public/static/images/promo3.png';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
+import { getHomePagePromotionalProducts } from '@/lib/sanityQueries';
+import { urlForImage } from '@/lib/image';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
-function Promotions() {
+async function Promotions() {
+  let promotionalProductsData = await getHomePagePromotionalProducts();
+  console.log('promotionalProductsData -->', promotionalProductsData);
   return (
     <div className=' text-center py-16'>
       <h3 className='mb-4 text-md text-blue-700 font-bold'>PROMOTIONS</h3>
@@ -36,33 +43,47 @@ function Promotions() {
         </div>
         {/* Right Col */}
         <div className=' text-left grid gap-3 grid-cols-2 grid-rows-1 h-auto'>
-          <div className=' bg-[#EFE1C7]  h-full overflow-hidden'>
+          <div className=' bg-[#EFE1C7]  h-full overflow-hidden  relative'>
             <div className='p-4'>
-              <h3 className='text-xl'>Flex Sweatshirt</h3>
-              <p>
-                <span className='line-through mr-3 font-light'> $100.00 </span>
-                <span className='font-bold h-full'>$75.00</span>
+              <h3 className='text-xl'>{promotionalProductsData[0]?.title}</h3>
+              <p className='font-bold text-lg h-full'>
+                ${promotionalProductsData[0]?.price}
               </p>
             </div>
             <Image
               className=' h-[100%]  w-full object-contain  '
-              src={Promo2}
+              src={urlForImage(
+                promotionalProductsData[0]?.images[0]?.asset
+              )?.url()}
+              width={200}
+              height={200}
               alt='Male modal image'
             />
+            <Button className='rounded-full bg-white p-0  absolute bottom-4 right-3'>
+              <ChevronRight className='w-6 h-6 mx-2 my-4 text-black hover:text-white' />
+            </Button>
           </div>
-          <div className=' bg-[#D6D6D8]  h-full overflow-hidden'>
+          <div className=' bg-[#D6D6D8]  h-full overflow-hidden relative'>
             <div className='p-4'>
-              <h3 className='text-xl'>Flex Sweatshirt</h3>
-              <p>
-                <span className='line-through mr-3 font-light'> $100.00 </span>
-                <span className='font-bold h-full'>$75.00</span>
+              <h3 className='text-xl'>{promotionalProductsData[1]?.title}</h3>
+              <p className='font-bold text-lg h-full'>
+                ${promotionalProductsData[1]?.price}
               </p>
             </div>
             <Image
               className=' h-[100%] w-full object-contain '
-              src={Promo3}
+              src={urlForImage(
+                promotionalProductsData[1]?.images[0]?.asset
+              )?.url()}
+              width={200}
+              height={200}
               alt='Male modal image'
             />
+            <Link href={`/detail/${promotionalProductsData[1]?.['_id']}`}>
+              <Button className='rounded-full bg-white p-0  absolute bottom-4 right-3'>
+                <ChevronRight className='w-6 h-6 mx-2 my-4 text-black hover:text-white' />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

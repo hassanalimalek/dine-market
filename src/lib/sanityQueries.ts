@@ -1,10 +1,28 @@
 import { cache } from 'react';
 import { sanityClient } from './sanityClient';
-import { SanityClient } from 'sanity';
 
 export const getProducts = async () => {
   const res = await sanityClient.fetch(`*[_type=='product']`);
   console.log('res --->', res);
+};
+export const getHomePagePromotionalProducts = async () => {
+  const res = await sanityClient.fetch(
+    `
+  *[_type=='homePagePromotionalProducts']{
+    ...homePagePromotionalProduct->{
+      _id,
+      title,
+      images,
+      price,
+      category->{
+       productCategory
+      }
+    }
+  }
+  `,
+    { next: { revalidate: 0 } }
+  );
+  return res;
 };
 export const getHomePageProducts = async () => {
   const res = await sanityClient.fetch(

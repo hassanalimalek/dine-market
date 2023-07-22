@@ -2,8 +2,6 @@ import CarouselProduct from '@/components/ui/carousel-product';
 import MainCarousel from '@/components/ui/main-carousel';
 import React from 'react';
 import { getHomePageProducts } from '@/lib/sanityQueries';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 async function HomeProducts() {
   let productsData = await getHomePageProducts();
 
