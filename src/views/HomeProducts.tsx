@@ -1,4 +1,4 @@
-import CarouselProduct from '@/components/ui/carousel-product';
+import ProductCard from '@/components/ui/product-card';
 import MainCarousel from '@/components/ui/main-carousel';
 import React from 'react';
 import { getHomePageProducts } from '@/lib/sanityQueries';
@@ -14,7 +14,7 @@ async function HomeProducts() {
       <div>
         <MainCarousel>
           {productsData.map((product: any) => (
-            <CarouselProduct
+            <ProductCard
               key={product._id}
               item={{
                 ...product,

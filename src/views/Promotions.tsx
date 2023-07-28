@@ -1,18 +1,15 @@
 import React from 'react';
 import Promo1 from '../../public/static/images/promo1.png';
-import Promo2 from '../../public/static/images/promo2.png';
-import Promo3 from '../../public/static/images/promo3.png';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { getHomePagePromotionalProducts } from '@/lib/sanityQueries';
 import { urlForImage } from '@/lib/image';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 async function Promotions() {
   let promotionalProductsData = await getHomePagePromotionalProducts();
-  console.log('promotionalProductsData -->', promotionalProductsData);
   return (
     <div className=' text-center py-16'>
       <h3 className='mb-4 text-md text-blue-700 font-bold'>PROMOTIONS</h3>

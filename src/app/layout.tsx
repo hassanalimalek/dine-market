@@ -3,6 +3,8 @@ import Footer from '../views/Footer';
 import Navbar from '../views/Navbar';
 import './globals.css';
 import { Inter } from 'next/font/google';
+import { Providers, store } from '@/store';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,15 +19,17 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   let genderAgeGroupData = await getGenderAgeGroup();
-  console.log('genderAgeGroupData --->', genderAgeGroupData);
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <div className='font-sora p-0 m-auto container '>
-          <Navbar genderAgeGroupData={genderAgeGroupData} />
-          {children}
-        </div>
-        <Footer />
+        <Providers>
+          <Toaster position='top-right' />
+          <div className='font-sora p-0 m-auto container '>
+            <Navbar genderAgeGroupData={genderAgeGroupData} />
+            {children}
+          </div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

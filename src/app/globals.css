@@ -93,10 +93,15 @@
   }
 }
 .no-default-container {
-  width: 100vw !important;
+  /* width: 100vw !important;
   margin: auto;
   position: absolute;
-  left: 0;
+  left: 0; */
+
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
 }
 
 .image-gallery-slide img {

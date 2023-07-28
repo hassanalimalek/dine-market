@@ -1,9 +1,31 @@
 import { cache } from 'react';
 import { sanityClient } from './sanityClient';
 
-export const getProducts = async () => {
-  const res = await sanityClient.fetch(`*[_type=='product']`);
-  console.log('res --->', res);
+export const getProducts = async (filterObj: any) => {
+  const filters = [];
+  for (const key in filterObj.sideBarFilters) {
+    if (filterObj.sideBarFilters[key] === true) {
+      filters.push(`'${key}'`);
+    }
+  }
+  let query = `_type=='product'`;
+  if (filterObj.searchValue) {
+    query = query + ` && title match '${filterObj.searchValue}'`;
+  }
+  if (filters.length > 0) {
+    query = query + ` && genderCategory->genderAndAge in [${filters}]`;
+  }
+
+  const res = await sanityClient.fetch(`*[
+      ${query}
+      ] {
+    ...,
+    category->{
+      productCategory
+     }
+  }`);
+
+  return res;
 };
 export const getHomePagePromotionalProducts = async () => {
   const res = await sanityClient.fetch(
@@ -58,6 +80,7 @@ export const getProductDetail = async (id: string) => {
   `,
     { next: { revalidate: 0 } }
   );
+  console.log('res --->', res);
   return res?.[0];
 };
 
@@ -70,5 +93,6 @@ export const getGenderAgeGroup = async () => {
     `,
     { next: { revalidate: 0 } }
   );
+  console.log('res <<<<<--', res);
   return res;
 };
