@@ -1,12 +1,14 @@
 'use client';
 import Image from 'next/image';
 import { Search, ShoppingCart } from 'lucide-react';
-import { FormEventHandler, SyntheticEvent, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { IGenderCategory } from '@/lib/types';
-
+import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import { SignInButton } from '@clerk/nextjs';
+import { Button } from '@/components/ui/button';
 interface FormElements extends HTMLFormControlsCollection {
   search: HTMLInputElement;
 }
@@ -20,8 +22,11 @@ const Navbar = ({
 }: {
   genderAgeGroupData: IGenderCategory[];
 }) => {
-  let router = useRouter();
+  const router = useRouter();
   const [navVisible, setNavVisible] = useState(false);
+
+  const { href } = window.location;
+
   const cartItemsCount = useSelector(
     (state: any) => state.cart.cartItems.length
   );
@@ -123,14 +128,24 @@ const Navbar = ({
           </form>
         </div>
       </div>
-      <Link href={'/cart'}>
-        <div className='p-2 rounded-full bg-gray-300 relative hidden w-full md:block md:w-auto'>
-          <ShoppingCart className='' />
-          <span className='absolute -top-3 -right-1 h-6 w-6 text-center rounded-full bg-[#f02d34] text-white'>
-            {cartItemsCount}
-          </span>
-        </div>
-      </Link>
+      <div className='flex items-center gap-4 '>
+        <Link href={'/cart'}>
+          <div className='p-2 rounded-full bg-gray-300 relative hidden w-full md:block md:w-auto'>
+            <ShoppingCart className='h-5 w-5' />
+            <span className='absolute -top-3 -right-1 h-5 w-5 text-sm text-center rounded-full bg-[#f02d34] text-white'>
+              {cartItemsCount}
+            </span>
+          </div>
+        </Link>
+        <SignedIn>
+          <UserButton afterSignOutUrl={href} />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton mode='modal' redirectUrl={href}>
+            <Button className='px-3 py-1 h-8'>Sign in</Button>
+          </SignInButton>
+        </SignedOut>
+      </div>
     </nav>
   );
 };
