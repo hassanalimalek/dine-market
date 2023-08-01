@@ -84,6 +84,7 @@ function ProductDetail({ params }: any) {
           <SearchX className=' h-16 w-16 m-auto mb-4' />
           <h2 className='text-2xl font-semibold mb-3'>Something went wrong </h2>
           <Button
+            className='rounded-md'
             onClick={() => {
               // This will reload the page without doing SSR
               router.refresh();
@@ -121,7 +122,7 @@ function ProductDetail({ params }: any) {
         </div>
       ) : (
         <div className='container px-0 '>
-          <div className='w-full  flex flex-col lg:flex-row  py-6 px-4 md:py-8'>
+          <div className='w-full gap-4 lg:gap-8 flex flex-col lg:flex-row  lg:items-center  py-6 px-4 md:py-8'>
             {/* Product Images */}
             <div className=' flex-1 flex-grow-[1.3]'>
               <ImageGallery
@@ -138,7 +139,7 @@ function ProductDetail({ params }: any) {
               />
             </div>
             {/* Buy Section  */}
-            <div className=' flex-1 flex-grow-1 p-0 lg:p-6  py-6 lg:py-8'>
+            <div className='shadow-sm  h-full  flex-1 flex-grow-1 p-0 lg:p-6  py-6 lg:py-8'>
               <h2 className=' font-semibold text-xl lg:text-3xl'>
                 {productData?.title}
               </h2>
@@ -192,7 +193,7 @@ function ProductDetail({ params }: any) {
               </div>
               <div className=' flex items-center gap-8 py-4  lg:py-6'>
                 <Button
-                  className='text-sm lg:text-md rounded-none'
+                  className='text-sm lg:text-md rounded-md'
                   onClick={() => {
                     addToCart();
                   }}

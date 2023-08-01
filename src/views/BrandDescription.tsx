@@ -61,7 +61,7 @@ function BrandDescription() {
                 The Natural color is the actual natural color of the fiber,
                 undyed and 100% traceable.
               </p>
-              <Button className='rounded-none'>See All Products</Button>
+              <Button className='rounded-md'>See All Products</Button>
             </div>
           </div>
         </div>

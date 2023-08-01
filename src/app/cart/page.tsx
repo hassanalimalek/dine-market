@@ -1,17 +1,22 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { Trash2 } from 'lucide-react';
+import { Trash2, CreditCard } from 'lucide-react';
 import React from 'react';
 import emptyCart from '../../../public/static/images/emptyCart.png';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { urlForImage } from '@/lib/image';
 import { changeItemQuantity, removeItem } from '@/store/slices/cartSlice';
+import getStripe from '@/lib/stripe';
+import { useUser } from '@clerk/nextjs';
+import { toastError } from '@/lib/utils';
+
 function Cart() {
   let dispatch = useDispatch();
   const { cartItems, totalItemsPrice } = useSelector(
     (state: any) => state.cart
   );
+  const { isLoaded, isSignedIn, user } = useUser();
 
   const changeQuantity = (item: any, operation: 'INC' | 'DEC') => {
     if (operation === 'INC') {
@@ -35,11 +40,61 @@ function Cart() {
   const removeProduct = (item: any) => {
     dispatch(removeItem({ _id: item.id, size: item.size }));
   };
+  const handleCheckout = async () => {
+    if (isLoaded && isSignedIn) {
+      let stripeInstance = await getStripe();
+
+      try {
+        // Creating stripe session
+        const response = await fetch('api/stripe', {
+          method: 'POST',
+          headers: { 'Content-type': 'application/json' },
+          body: JSON.stringify(cartItems),
+        });
+        const sessionData = await response.json();
+        if (!sessionData.data) {
+          throw new Error(sessionData?.error);
+        }
+
+        // Storing order in database upon successful session creation
+        const orderResponse = await fetch('api/order', {
+          method: 'POST',
+          headers: { 'Content-type': 'application/json' },
+          body: JSON.stringify({
+            order_id: sessionData.data.id,
+            user_id: user.id,
+            order_detail: JSON.stringify(cartItems),
+          }),
+        });
+
+        const orderResponseData = await orderResponse.json();
+        if (!orderResponseData.data) {
+          throw new Error(orderResponseData?.error);
+        }
+        localStorage.setItem('orderId', sessionData.data.id);
+        // Redirecting to stripe payment page
+        if (stripeInstance) {
+          const { error } = await stripeInstance.redirectToCheckout({
+            sessionId: sessionData.data.id,
+          });
+          console.log('response payment-->', response);
+          console.log('error -->', error);
+          if (error) {
+            throw new Error(error?.message);
+          }
+        }
+      } catch (error) {
+        toastError((String(error) as string) || 'Something went wrong');
+      }
+    } else {
+      toastError('Login to place order');
+    }
+  };
   return (
-    <div className='py-4 lg:py-16 '>
+    <div className='py-4 lg:py-16 min-h-[75vh] border border-black'>
       {cartItems.length > 0 ? (
         <div>
-          <h2 className='text-2xl font-bold'>Shopping Cart</h2>
+          <h2 className='text-3xl font-bold mb-4'>Shopping Cart</h2>
           <div className='flex flex-col lg:flex-row gap-1 lg:gap-16 '>
             <div className='p-0 flex-1 flex-grow-1 '>
               {/* Cart Products */}
@@ -104,8 +159,8 @@ function Cart() {
             </div>
 
             {/* Order Summary */}
-            <div className='w-full  lg:w-[350px] p-4 my-8  bg-[#FBFCFF]'>
-              <h3 className='text-xl font-bold mb-6'>Order Summary</h3>
+            <div className='w-full shadow-sm rounded-md   lg:w-[375px] p-6 px-8  my-8  bg-[#FBFCFF]'>
+              <h3 className='text-2xl font-bold mb-6'>Order Summary</h3>
               <div>
                 <div className='flex justify-between gap-2 mb-4 '>
                   <p className='text-lg font-normal '>Delivery Estimation</p>
@@ -115,7 +170,10 @@ function Cart() {
                   <p className='text-lg font-normal '>Total</p>
                   <p className='text-lg font-semibold '>$ {totalItemsPrice}</p>
                 </div>
-                <Button className='rounded-none'>Proceed to Checkout</Button>
+                <Button className='rounded-md' onClick={handleCheckout}>
+                  <span className='mr-4'>Proceed to Checkout</span>
+                  <CreditCard className='hover:text-green-600' />
+                </Button>
               </div>
             </div>
           </div>

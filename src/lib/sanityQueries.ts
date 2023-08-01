@@ -93,6 +93,6 @@ export const getGenderAgeGroup = async () => {
     `,
     { next: { revalidate: 0 } }
   );
-  console.log('res <<<<<--', res);
+
   return res;
 };

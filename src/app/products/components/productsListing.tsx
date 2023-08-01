@@ -29,6 +29,7 @@ function ProductsListing({
           </h2>
           {!filterSearchAppliedCheck && (
             <Button
+              className='rounded-md'
               onClick={() => {
                 // This will reload the page without doing SSR
                 router.refresh();

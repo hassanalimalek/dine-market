@@ -25,7 +25,7 @@ const Navbar = ({
   const router = useRouter();
   const [navVisible, setNavVisible] = useState(false);
 
-  const { href } = window.location;
+  // const { href } = window.location;
 
   const cartItemsCount = useSelector(
     (state: any) => state.cart.cartItems.length
@@ -56,9 +56,9 @@ const Navbar = ({
         >
           <path
             stroke='currentColor'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            stroke-width='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth='2'
             d='M1 1h15M1 7h15M1 13h15'
           />
         </svg>
@@ -138,10 +138,10 @@ const Navbar = ({
           </div>
         </Link>
         <SignedIn>
-          <UserButton afterSignOutUrl={href} />
+          <UserButton afterSignOutUrl={''} />
         </SignedIn>
         <SignedOut>
-          <SignInButton mode='modal' redirectUrl={href}>
+          <SignInButton mode='modal' redirectUrl={''}>
             <Button className='px-3 py-1 h-8'>Sign in</Button>
           </SignInButton>
         </SignedOut>
