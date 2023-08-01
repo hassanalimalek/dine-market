@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Trash2, CreditCard } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 import emptyCart from '../../../public/static/images/emptyCart.png';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,9 +10,11 @@ import { changeItemQuantity, removeItem } from '@/store/slices/cartSlice';
 import getStripe from '@/lib/stripe';
 import { useUser } from '@clerk/nextjs';
 import { toastError } from '@/lib/utils';
+import Spinner from '@/components/ui/spinner';
 
 function Cart() {
   let dispatch = useDispatch();
+  const [loading, setLoading] = useState<boolean>();
   const { cartItems, totalItemsPrice } = useSelector(
     (state: any) => state.cart
   );
@@ -45,6 +47,7 @@ function Cart() {
       let stripeInstance = await getStripe();
 
       try {
+        setLoading(true);
         // Creating stripe session
         const response = await fetch('api/stripe', {
           method: 'POST',
@@ -82,16 +85,18 @@ function Cart() {
           if (error) {
             throw new Error(error?.message);
           }
+          setLoading(false);
         }
       } catch (error) {
         toastError((String(error) as string) || 'Something went wrong');
+        setLoading(false);
       }
     } else {
       toastError('Login to place order');
     }
   };
   return (
-    <div className='py-4 lg:py-16 min-h-[75vh] border border-black'>
+    <div className='py-4 lg:py-16 min-h-[75vh]'>
       {cartItems.length > 0 ? (
         <div>
           <h2 className='text-3xl font-bold mb-4'>Shopping Cart</h2>
@@ -159,20 +164,28 @@ function Cart() {
             </div>
 
             {/* Order Summary */}
-            <div className='w-full shadow-sm rounded-md   lg:w-[375px] p-6 px-8  my-8  bg-[#FBFCFF]'>
+            <div className='w-full shadow-sm rounded-md  lg:w-[375px] p-6 px-8  my-8  bg-[#e9e8e8]'>
               <h3 className='text-2xl font-bold mb-6'>Order Summary</h3>
               <div>
                 <div className='flex justify-between gap-2 mb-4 '>
                   <p className='text-lg font-normal '>Delivery Estimation</p>
-                  <p className='text-lg font-normal  text-yellow-400'>5 Days</p>
+                  <p className='text-lg font-normal  text-yellow-900'>5 Days</p>
                 </div>
                 <div className='flex justify-between mb-8'>
                   <p className='text-lg font-normal '>Total</p>
                   <p className='text-lg font-semibold '>$ {totalItemsPrice}</p>
                 </div>
-                <Button className='rounded-md' onClick={handleCheckout}>
+                <Button
+                  className='rounded-md'
+                  disabled={loading}
+                  onClick={handleCheckout}
+                >
                   <span className='mr-4'>Proceed to Checkout</span>
-                  <CreditCard className='hover:text-green-600' />
+                  {loading ? (
+                    <Spinner className='inline w-6 h-8 text-gray-100 animate-spin dark:text-gray-800 fill-blue-600' />
+                  ) : (
+                    <CreditCard className='hover:text-green-600' />
+                  )}
                 </Button>
               </div>
             </div>

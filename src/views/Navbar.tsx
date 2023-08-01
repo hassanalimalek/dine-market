@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { Search, ShoppingCart } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -9,6 +9,8 @@ import { IGenderCategory } from '@/lib/types';
 import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import { SignInButton } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
+import LogoImage from '../../public/Logo.png';
+
 interface FormElements extends HTMLFormControlsCollection {
   search: HTMLInputElement;
 }
@@ -25,8 +27,6 @@ const Navbar = ({
   const router = useRouter();
   const [navVisible, setNavVisible] = useState(false);
 
-  // const { href } = window.location;
-
   const cartItemsCount = useSelector(
     (state: any) => state.cart.cartItems.length
   );
@@ -34,8 +34,9 @@ const Navbar = ({
   return (
     <nav className='px-0 flex justify-between items-center h-20 '>
       <Link href='/'>
-        <Image src={'/Logo.webp'} alt='website logo' width={150} height={150} />
+        <Image src={LogoImage} alt='website logo' width={150} height={150} />
       </Link>
+
       <button
         data-collapse-toggle='navbar-default'
         type='button'

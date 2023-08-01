@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import React from 'react';
-
+import LogoImage from '../../public/Logo.png';
 function Footer() {
   return (
     <footer className='bg-white dark:bg-gray-900'>
@@ -10,7 +10,7 @@ function Footer() {
           <div className='grid grid-cols-2 gap-12 sm:gap-6 sm:grid-cols-4'>
             <div className='mb-6 md:mb-0 '>
               <Image
-                src={'/Logo.webp'}
+                src={LogoImage}
                 className='mb-4'
                 alt='website logo'
                 width={200}
