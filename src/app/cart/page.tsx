@@ -2,11 +2,15 @@
 import { Button } from '@/components/ui/button';
 import { Trash2, CreditCard } from 'lucide-react';
 import React, { useState } from 'react';
-import emptyCart from '../../../public/static/images/emptyCart.png';
+import emptyCartImage from '../../../public/static/images/emptyCart.png';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { urlForImage } from '@/lib/image';
-import { changeItemQuantity, removeItem } from '@/store/slices/cartSlice';
+import {
+  changeItemQuantity,
+  removeItem,
+  emptyCart,
+} from '@/store/slices/cartSlice';
 import getStripe from '@/lib/stripe';
 import { useUser } from '@clerk/nextjs';
 import { toastError } from '@/lib/utils';
@@ -75,12 +79,15 @@ function Cart() {
           throw new Error(orderResponseData?.error);
         }
         localStorage.setItem('orderId', sessionData.data.id);
+
         // Redirecting to stripe payment page
         if (stripeInstance) {
           const { error } = await stripeInstance.redirectToCheckout({
             sessionId: sessionData.data.id,
           });
-          console.log('response payment-->', response);
+
+          ``;
+
           console.log('error -->', error);
           if (error) {
             throw new Error(error?.message);
@@ -100,8 +107,8 @@ function Cart() {
       {cartItems.length > 0 ? (
         <div>
           <h2 className='text-3xl font-bold mb-4'>Shopping Cart</h2>
-          <div className='flex flex-col lg:flex-row gap-1 lg:gap-16 '>
-            <div className='p-0 flex-1 flex-grow-1 '>
+          <div className='flex items-center flex-col md:flex-row gap-4 lg:gap-16 '>
+            <div className='p-0 flex-[2] flex-grow-2  w-full'>
               {/* Cart Products */}
               {cartItems.map((item: any) => {
                 return (
@@ -164,7 +171,7 @@ function Cart() {
             </div>
 
             {/* Order Summary */}
-            <div className='w-full shadow-sm rounded-md  lg:w-[375px] p-6 px-8  my-8  bg-[#e9e8e8]'>
+            <div className='flex-1 w-full shadow-sm rounded-md w-auto lg:w-[375px] p-6 px-8  my-8  bg-[#f1f1f1]'>
               <h3 className='text-2xl font-bold mb-6'>Order Summary</h3>
               <div>
                 <div className='flex justify-between gap-2 mb-4 '>
@@ -193,7 +200,7 @@ function Cart() {
         </div>
       ) : (
         <div className='h-[60vh] flex justify-center items-center'>
-          <Image src={emptyCart} alt='' className=' m-auto' />
+          <Image src={emptyCartImage} alt='' className=' m-auto' />
         </div>
       )}
     </div>

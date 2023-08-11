@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 import { Toggle } from '@/components/ui/toggle';
 import { Button } from '@/components/ui/button';
-import { SearchX, ShoppingCart } from 'lucide-react';
+import { ArrowLeftCircleIcon, SearchX, ShoppingCart } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import useSWR from 'swr';
 import { getProductDetail } from '@/lib/sanityQueries';
@@ -106,7 +106,13 @@ function ProductDetail({ params }: any) {
           </div>
         </div>
       ) : (
-        <div className='container px-0 '>
+        <div className='container px-0 pt-2 '>
+          <ArrowLeftCircleIcon
+            className='h-8 w-8 ml-4 cursor-pointer'
+            onClick={() => {
+              router.back();
+            }}
+          />
           <div className='w-full gap-4 lg:gap-8 flex flex-col lg:flex-row  lg:items-center  py-6 px-4 md:py-8'>
             {/* Product Images */}
             <div className=' flex-1 flex-grow-[1.3]'>

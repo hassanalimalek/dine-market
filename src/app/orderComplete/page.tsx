@@ -7,8 +7,12 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { notFound } from 'next/navigation';
 import Spinner from '@/components/ui/spinner';
+import { useDispatch } from 'react-redux';
+import { emptyCart } from '@/store/slices/cartSlice';
+import Link from 'next/link';
 
 function OrderComplete() {
+  let dispatch = useDispatch();
   let [orderId, setOrderId] = useState<string>();
   const searchParams = useSearchParams();
 
@@ -17,6 +21,7 @@ function OrderComplete() {
   useEffect(() => {
     let id = localStorage.getItem('orderId');
     if (id) {
+      dispatch(emptyCart());
       setOrderId(id);
       localStorage.removeItem('orderId');
     } else {
@@ -38,11 +43,7 @@ function OrderComplete() {
                   alt='checkmark icon'
                 />
                 <div className='text-center '>
-                  <h3
-                    className='md:text-2xl  text-gray-900  text-center
-                    font-heading text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#7F8C8D] to-[#000000] mb-5
-                    '
-                  >
+                  <h3 className='md:text-2xl  text-gray-900  text-center font-heading text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#7F8C8D] to-[#000000] mb-5'>
                     Payment Done!
                   </h3>
                   <p className='text-gray-600 my-2'>
@@ -50,7 +51,9 @@ function OrderComplete() {
                   </p>
                   <p> Your order id is {orderId} </p>
                   <div className='py-8 text-center'>
-                    <Button className='text-lg'>Go to Home</Button>
+                    <Link href={'/'}>
+                      <Button className='text-lg'>Go to Home</Button>
+                    </Link>
                   </div>
                 </div>
               </>

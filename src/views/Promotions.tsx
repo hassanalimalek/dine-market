@@ -56,9 +56,11 @@ async function Promotions() {
               height={200}
               alt='Male modal image'
             />
-            <Button className='rounded-full bg-white p-0  absolute bottom-4 right-3'>
-              <ChevronRight className='w-6 h-6 mx-2 my-4 text-black hover:text-white' />
-            </Button>
+            <Link href={`/detail/${promotionalProductsData[1]?.['_id']}`}>
+              <Button className='rounded-full bg-white p-0  absolute bottom-4 right-3'>
+                <ChevronRight className='w-6 h-6 mx-2 my-4 text-black hover:text-white' />
+              </Button>
+            </Link>
           </div>
           <div className=' bg-[#D6D6D8]  h-full overflow-hidden relative'>
             <div className='p-4'>
