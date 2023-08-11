@@ -24,7 +24,7 @@ function ProductDetailSkeleton() {
         </div>
 
         {/* Buy Section  */}
-        <div className='shadow-sm  h-full  flex-1 flex-grow-1 p-0 lg:p-6  py-6 lg:py-8'>
+        <div className='shadow-sm  h-full  flex-1 flex-grow-1 p-0 lg:p-6  py-6 lg:py-24 '>
           <div className='h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-full mb-6'></div>
           <div className='h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-full  mb-6'></div>
           <div className='h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-full  mb-6'></div>
