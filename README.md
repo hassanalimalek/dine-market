@@ -25,6 +25,12 @@ DineMarket comprises essential pages for a complete shopping journey:
 - Product Cart Page: Allows users to review, modify, and confirm their selected items before proceeding to checkout.
   
 
+## User Authentication
+DineMarket prioritizes user security and convenience by implementing a robust authentication system:
+
+Clerk: The project integrates with Clerk, a third-party authentication service. This ensures that user sign-in and sign-up processes are secure, streamlined, and user-friendly.
+
+
 ## State Management
 Redux Toolkit is employed for efficient state management, ensuring seamless synchronization and persistence of user interactions across the app. This guarantees that user data remains consistent even after app refreshes.
 
