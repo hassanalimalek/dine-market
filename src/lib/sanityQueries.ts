@@ -83,6 +83,8 @@ export const getProductDetail = async (id: string) => {
     { next: { revalidate: 0 } }
   );
 
+  console.log(' res --->', res);
+
   return res?.[0];
 };
 
