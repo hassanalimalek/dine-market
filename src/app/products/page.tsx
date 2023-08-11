@@ -7,6 +7,13 @@ import SideBar from './components/sidebar';
 
 import { FilterIcon } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Products',
+  description: 'List of products available in dinemarket',
+};
+
 function Products() {
   let searchParams = useSearchParams();
   const [sideBarFilters, setSideBarFilters] = useState<any>({});

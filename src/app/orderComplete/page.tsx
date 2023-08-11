@@ -10,6 +10,11 @@ import Spinner from '@/components/ui/spinner';
 import { useDispatch } from 'react-redux';
 import { emptyCart } from '@/store/slices/cartSlice';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Order Complete',
+};
 
 function OrderComplete() {
   let dispatch = useDispatch();

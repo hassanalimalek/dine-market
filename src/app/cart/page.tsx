@@ -15,6 +15,12 @@ import getStripe from '@/lib/stripe';
 import { useUser } from '@clerk/nextjs';
 import { toastError } from '@/lib/utils';
 import Spinner from '@/components/ui/spinner';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Cart',
+  description: 'View the products cart',
+};
 
 function Cart() {
   let dispatch = useDispatch();
