@@ -35,9 +35,6 @@ function ProductDetail() {
     isLoading,
   } = useSWR(params.productId, getProductDetail);
 
-  console.log('params.productId -->', params.productId);
-  console.log('error -->', error);
-
   useEffect(() => {
     // Getting product images
     if (productData?.images) {
@@ -65,7 +62,7 @@ function ProductDetail() {
   };
   const addToCart = () => {
     if (!selectedSize) {
-      toastError('Select a product size');
+      toastError('Select product size');
     } else {
       toastSuccess('Product added to cart');
       dispatch(

@@ -10,7 +10,7 @@ export const toastError = (message: string) => {
   return toast.error(message, {
     style: {
       border: '1px solid red',
-      padding: '16px',
+      padding: '8px',
       color: 'black',
       fontSize: '18px',
     },
@@ -20,7 +20,7 @@ export const toastSuccess = (message: string) => {
   return toast.success(message, {
     style: {
       border: '1px solid green',
-      padding: '16px',
+      padding: '8px',
       color: 'black',
       fontSize: '18px',
     },

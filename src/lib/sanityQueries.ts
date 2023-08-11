@@ -66,8 +66,6 @@ export const getHomePageProducts = async () => {
   return res;
 };
 export const getProductDetail = async (id: string) => {
-  console.log('id --->', id);
-  console.log('sanityClient --->', sanityClient);
   const res = await sanityClient.fetch(
     `
     *[_type=='product' && _id== '${id}' ]{
@@ -82,8 +80,6 @@ export const getProductDetail = async (id: string) => {
   `,
     { next: { revalidate: 0 } }
   );
-
-  console.log(' res --->', res);
 
   return res?.[0];
 };
