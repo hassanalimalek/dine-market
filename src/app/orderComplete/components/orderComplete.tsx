@@ -13,9 +13,8 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Order Complete',
+  title: 'Order Complete ',
 };
-
 function OrderComplete() {
   let dispatch = useDispatch();
   let [orderId, setOrderId] = useState<string>();
