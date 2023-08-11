@@ -20,6 +20,10 @@ export async function POST(request: NextRequest, response: NextResponse) {
         });
       } catch (error) {
         console.log('Error in hook --->', error);
+        return NextResponse.json({
+          message: 'Unable to complete processing',
+          data: error,
+        });
       }
     }
   }
