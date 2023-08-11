@@ -26,7 +26,7 @@ const Navbar = ({
 }) => {
   const router = useRouter();
   const [navVisible, setNavVisible] = useState(false);
-  console.log('process.nev--->', process.env);
+
   const cartItemsCount = useSelector(
     (state: any) => state.cart.cartItems.length
   );
