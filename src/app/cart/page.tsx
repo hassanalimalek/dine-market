@@ -86,8 +86,6 @@ function Cart() {
             sessionId: sessionData.data.id,
           });
 
-          ``;
-
           console.log('error -->', error);
           if (error) {
             throw new Error(error?.message);

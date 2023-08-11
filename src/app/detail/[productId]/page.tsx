@@ -59,7 +59,6 @@ function ProductDetail({ params }: any) {
     }
   };
   const addToCart = () => {
-    console.log('add to cart called @@@');
     if (!selectedSize) {
       toastError('Select a product size');
     } else {

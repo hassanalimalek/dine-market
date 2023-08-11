@@ -8,9 +8,8 @@ const stripe = new Stripe(key, {
 });
 
 export async function POST(request: NextRequest, response: NextResponse) {
-  console.log('Post reuqest called');
   const body = await request.json();
-  console.log(' body --->', body);
+
   if (body) {
     // Cart Items
     let items = body.map((item: any) => {
@@ -46,15 +45,12 @@ export async function POST(request: NextRequest, response: NextResponse) {
         cancel_url: `${request.headers.get('origin')}/?canceled=true`,
       });
 
-      console.log('session --->', session);
       return NextResponse.json({
         message: 'Stripe session created successfully',
         data: session,
       });
     } catch (err: any) {
-      // return t.error();
       return NextResponse.json({ error: err.message });
-      // return NextResponse.json(err.message);
     }
   }
 }

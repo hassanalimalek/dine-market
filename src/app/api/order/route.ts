@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 export async function POST(request: NextRequest, response: NextResponse) {
   try {
     let req = await request.json();
-    console.log(' req? --->', req);
+
     let res = await db
       .insert(ordersTable)
       .values({
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         payment_status: 'pending',
       })
       .returning();
-    console.log('res ---->', res);
+
     return NextResponse.json({ message: 'Data added successfully', data: res });
   } catch (error: any) {
     console.log('Error --->', error);
@@ -27,14 +27,12 @@ export async function POST(request: NextRequest, response: NextResponse) {
 export async function PATCH(request: NextRequest, response: NextResponse) {
   try {
     let req = await request.json();
-    console.log(' PATCH @@@@@@ req -->', req);
-    console.log(' req? --->', req);
+
     let res = await db
       .update(ordersTable)
       .set({ payment_status: 'paid' })
       .where(eq(ordersTable.order_id, req.order_id))
       .returning();
-    console.log('res ---->', res);
     return NextResponse.json({ message: 'Data added successfully', data: res });
   } catch (error) {
     console.log('Error --->', error);
