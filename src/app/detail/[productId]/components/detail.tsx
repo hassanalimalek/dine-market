@@ -35,6 +35,9 @@ function ProductDetail() {
     isLoading,
   } = useSWR(params.productId, getProductDetail);
 
+  console.log('params.productId -->', params.productId);
+  console.log('error -->', error);
+
   useEffect(() => {
     // Getting product images
     if (productData?.images) {
