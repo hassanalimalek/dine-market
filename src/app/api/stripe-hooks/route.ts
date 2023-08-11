@@ -32,7 +32,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         return NextResponse.json(
           {
             message: 'Unable to complete processing',
-            data: error?.message,
+            data: `process.env.NEXT_PUBLIC_DOMAIN -- > ,${process.env.NEXT_PUBLIC_DOMAIN}`,
           },
           { status: 400 }
         );
