@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { addItem } from '@/store/slices/cartSlice';
 import { useRouter } from 'next/navigation';
 import Spinner from '@/components/ui/spinner';
+import ProductDetailSkeleton from '@/components/ui/productDetailSkeleton';
 function ProductDetail({ params }: any) {
   const sizes = ['XS', 'S', 'M', 'L', 'XL'];
   const windowSize = useWindowSize();
@@ -100,11 +101,7 @@ function ProductDetail({ params }: any) {
   return (
     <div className='bg-[#FCFCFC] no-default-container bg-none  text min-h-[80vh]'>
       {isLoading ? (
-        <div className='container px-0 h-[75vh] flex items-center justify-center '>
-          <div role='status '>
-            <Spinner className='inline w-16 h-16 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600' />
-          </div>
-        </div>
+        <ProductDetailSkeleton />
       ) : (
         <div className='container px-0 pt-2 '>
           <ArrowLeftCircleIcon

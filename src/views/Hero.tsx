@@ -3,6 +3,7 @@ import { Button } from '../components/ui/button';
 import HeroImg from '../../public/static/images/hero.png';
 import FeaturedListImg from '../../public/static/images/feautured-list.png';
 import Image from 'next/image';
+import Link from 'next/link';
 const Hero = () => {
   return (
     <div className=' h-[90vh] p-0 pt-10 flex   w-full items-center lg:items-end gap-10'>
@@ -18,9 +19,11 @@ const Hero = () => {
             Anyone can beat you but no one can beat your outfit as long as you
             wear Dine outfits.
           </p>
-          <Button className='my-8 py-6 px-6 border-none'>
-            <ShoppingCart className='mr-2 h-5 w-5' /> Start Shopping
-          </Button>
+          <Link href={'/products'}>
+            <Button className='my-8 py-6 px-6 border-none'>
+              <ShoppingCart className='mr-2 h-5 w-5' /> Start Shopping
+            </Button>
+          </Link>
         </div>
         <div className=' mb-6'>
           <Image
