@@ -1,7 +1,7 @@
 import { ShoppingCart } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import HeroImg from '../../public/static/images/hero.png';
-import FeaturedListImg from '../../public/static/images/feautured-list.png';
+import HeroImg from '/public/static/images/hero.png';
+import FeaturedListImg from '/public/static/images/feautured-list.png';
 import Image from 'next/image';
 import Link from 'next/link';
 const Hero = () => {

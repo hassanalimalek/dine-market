@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import React from 'react';
-import LogoImage from '../../public/Logo.png';
+import LogoImage from '/public/Logo.png';
 function Footer() {
   return (
     <footer className='bg-white dark:bg-gray-900'>

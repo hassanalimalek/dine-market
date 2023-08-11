@@ -9,7 +9,7 @@ import { IGenderCategory } from '@/lib/types';
 import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import { SignInButton } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
-import LogoImage from '../../public/Logo.png';
+import LogoImage from '/public/Logo.png';
 
 interface FormElements extends HTMLFormControlsCollection {
   search: HTMLInputElement;

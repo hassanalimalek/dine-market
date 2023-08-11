@@ -1,5 +1,5 @@
 import React from 'react';
-import QualitySectionImg from '../../public/static/images/qualitySection.png';
+import QualitySectionImg from '/public/static/images/qualitySection.png';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 function BrandDescription() {
